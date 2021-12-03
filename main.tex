@@ -1,0 +1,118 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\title{CSC 349-01: Design and Analysis of Algorithms Fall 2021}
+\author{Lecture 30: December 3rd, 2021}
+\begin{document}
+
+\maketitle{Scribe: Harsimran Preet Singh\\* Instructor: Theresa Migler}
+\documentclass{}
+
+\section{Announcements}
+
+None
+
+\section{Approximation Algorithm for Bin Packing}
+
+\subsection{General Idea for Approximation Algorithms}
+Main idea is to find fast algoritms that produce feasible solutions that are probably close to optimal.
+
+\subsection{Pseudocode for Bin Packing}
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        \textbf{Input}: \textit{n} items each with a weight wi ≤1 and an unlimited supply of unit capacity bins,\textit{ b1,b2,....}\\
+        \textbf{Goal}: An assignment of items to bins such that the bin capacity is not exceeded and the minimum number of bins is used.
+        
+    }%
+}
+Example:
+
+\begin{itemize}
+\item Suppose we are given 7 items with weights:{.3,.2,.2,.2,.2,.4,.5}
+\item \textit{b1} = {1,2,3,4},\textit{ b2} = {5,6}, and \textit{b3} = {7} is a feasible assignment.
+\item Is it optimal? Ans: No, we can do better.
+\item How about \textbf{b1} = {2,3,4,6} and \textit{b2} = {1,5,7}?
+\end{itemize}
+
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+FirstFit(\{\textit{w1,w2,w3,...wn}\})
+\newline
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+\textbf{Input}: \textit{n} items each with a weight wi ≤ 1 and an unlimited supply of unit capacity bins,\textit{ b1,b2,....}
+\newline
+\textbf{Output}: An assignment of items to bins such that the bin capacity is not exceeded and the minimum number of bins is used.
+\begin{enumerate}
+\item \textbf{for} i from 1 to n \textbf{do}
+\item \tab Suppose the first x bins are partially filled.
+\item \tab \textbf{for} j from 1 to x \textbf{do}
+\item \tab \tab \textbf{if} Item i fits into bin j \textbf{then}
+\item \tab \tab Add item i to bin j
+\item \tab \textbf{if} Item i has not been assigned \textbf{then}
+\item \tab \tab Start a new bin, bx +1 and add item i to it.
+\end{enumerate}
+
+\newline
+\noindent\rule[0.5ex]{\linewidth}{1pt}
+\subsection{Things to note about the above Algorithm }
+\begin{itemize}
+\item Every item gets assigned a bin.
+\item The capacity constraint for each bin is met
+\item \textbf{FirstFit} produces a feasible solution
+\end{itemize}
+
+
+\subsection{Feasibility of FirstFit(\{w1,w2,w3,...wn\})}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        \textbf{Lemma}: \textit{returns} a proper bin packing (no bin has more than 1 unit of weight assigned to it).
+        \newline \newline
+        \textbf{Proof}: We can see in line 4 of FirstFit({\{w1,w2,w3,...wn \}}) that we only add item i to bin j if it fits (if it doesn’t exceed the unit capacity of bin j ).
+        
+    }%
+}
+\begin{itemize}
+\item What is the running time of FirstFit(\{w1,w2,w3,...wn\})? \textbf{O(n^2)}
+\item  
+\item FirstFit produces a feasible solution.  
+\item \tab Is it optimal? \textbf{ NO (example where it wont work is with inputs: .5, .6, .2, .5)} 
+\item How Close to OPT? 
+\item Note: If on completion of \textbf{First Fit}, there are \textit{m} bins used, then at least \textit{m-1} bins are more than half filled.
+\item Thus:
+\end{itemize}
+\begin{equation} \label{eq1}
+\begin{split}
+OPT \geq \sum_{i=1}^{n} wi > \frac{1}{2}(m-1) 
+\end{split}
+\end{equation}
+
+\begin{equation} 
+\begin{split}
+So, 2OPT > m-1
+\end{split}
+\end{equation}
+and OPT and \textit{m} are both integers so: \\
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        \begin{equation}
+        \begin{split}
+        2OPT > m \geq OPT
+        \end{split}
+        \end{equation}
+        
+    }%
+}
+
+
+\end{document}
